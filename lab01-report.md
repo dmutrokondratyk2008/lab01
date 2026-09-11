@@ -11,14 +11,15 @@
 ### Дослідження структури бази даних
 
 ```sql
--- Отримати список усіх таблиць у публічній схемі бази даних
+-- Отримати список усіх таблиць (без службових view) у публічній схемі бази даних
 SELECT table_name
 FROM information_schema.tables
 WHERE table_schema = 'public'
+  AND table_type = 'BASE TABLE'
 ORDER BY table_name;
 ```
 
-Результат: У базі даних створено 8 основних таблиць: categories, customers, employees, order_items, orders, products, regions, suppliers.
+Результат: У базі даних створено 8 основних таблиць: categories, customers, employees, order_items, orders, products, regions, suppliers. Окрім них, у схемі є ще 4 аналітичні view (customer_orders_summary, employee_performance, monthly_sales_report, product_sales_summary) — вони виключені фільтром table_type = 'BASE TABLE', оскільки не є фізичними таблицями.
 
 ![Список таблиць](<screenshots/БД ЗАПИТИ 1/Отримати список усіх таблиць у публічній схемі бази даних.png>)
 
